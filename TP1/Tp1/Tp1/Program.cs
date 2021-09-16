@@ -1,28 +1,23 @@
 ﻿using System;
-
+using System.Text;
 namespace Tp1
 {
     class Program
     {
         static void Main(string[] args)
         {
-            int contador=0;
-            string saludo = "1010";
-            foreach (char caracter in saludo)
+            string binario="11010";
+            int potencia = binario.Length - 1;
+            double acum = 0;
+            for (int i = 0; i < binario.Length; i++)
             {
-                if (caracter == '1' || caracter == '0')
+                if (binario[i] == '1')
                 {
-                    contador++;
+                    acum += Math.Pow(2, potencia);
                 }
-                else
-                {
-                    break;
-                }
+                potencia--;
             }
-            if(contador==saludo.Length)
-            { 
-                Console.WriteLine(saludo.Length);
-            }
+            Console.WriteLine(acum.ToString());
         }
     }
 }

@@ -17,7 +17,6 @@ namespace Entidades
                 this.numero = ValidarOperando(value);
             }
         }
-
         Operando():this(0)
         {}
         Operando(double numero)
@@ -53,14 +52,66 @@ namespace Entidades
             }
             return (contador==binario.Length);
         }
-        public string BinarioDecimal(string binario)
+        public static string BinarioDecimal(string binario)
         {
             if(!EsBinario(binario))
             {
                 return "Valor Invalido";
             }
-
-
+            int potencia=binario.Length-1;
+            double acum=0;
+            for (int i=0;i<binario.Length;i++)
+            {
+                if(binario[i]=='1')
+                {
+                    acum += Math.Pow(2,potencia);
+                }
+                potencia--;
+            }
+            return acum.ToString();
+        }
+        public static string DecimalBinario(string numero)
+        {
+            StringBuilder resultado = new StringBuilder();
+            if(!double.TryParse(numero,out double num))
+            {
+                return "Valor Invalido";
+            }
+            while(num>=1)
+            {
+                num=Math.Abs((int)num);
+                if (num%2==1)
+                {
+                    resultado.Insert(0,'1');
+                }
+                else if(num%2==0)
+                {
+                    resultado.Insert(0,'0');
+                }
+                num /= 2;
+            }
+            return resultado.ToString();
+        }
+        public static string DecimalBinario(double numero)
+        {
+            return DecimalBinario(numero.ToString());
+        }
+        public static double operator +(Operando n1,Operando n2)
+        {
+            return (n1.numero + n2.numero);
+        }
+        public static double operator -(Operando n1,Operando n2)
+        {
+            return (n1.numero - n2.numero);
+        }
+        public static double operator *(Operando n1,Operando n2)
+        {
+            return (n1.numero * n2.numero);
+        }
+        public static double operator /(Operando n1, Operando n2)
+        {
+            if(n2.numero == 0){return double.MinValue;}
+            return (n1.numero / n2.numero);
         }
     }
 }
