@@ -17,13 +17,13 @@ namespace Entidades
                 this.numero = ValidarOperando(value);
             }
         }
-        Operando():this(0)
+        public Operando():this(0)
         {}
-        Operando(double numero)
+        public Operando(double numero)
         {
             this.numero = numero;
         }
-        Operando(string strNumero)
+        public Operando(string strNumero)
         {
             this.Numero = strNumero;
         }
@@ -39,6 +39,10 @@ namespace Entidades
         private static bool EsBinario(string binario)
         {
             int contador=0;
+            if (!int.TryParse(binario,out _))
+            {
+                return false;
+            }
             foreach(char caracter in binario)
             {
                 if(caracter=='1'||caracter=='0')
