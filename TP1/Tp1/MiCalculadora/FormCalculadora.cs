@@ -47,7 +47,7 @@ namespace MiCalculadora
         private void btnOperar_Click(object sender, EventArgs e)
         {
             lblResultado.Text = Operar(txtNumero1.Text, txtNumero2.Text, cmbOperador.Text).ToString();
-            if (txtNumero1.Text != "" || txtNumero2.Text != "")
+            if ((txtNumero1.Text != "" || txtNumero2.Text != "") && (double.TryParse(txtNumero1.Text,out _) && double.TryParse(txtNumero2.Text,out _)))
             {
                 lstOperaciones.Items.Add($"{txtNumero1.Text} {cmbOperador.Text} {txtNumero2.Text} = {lblResultado.Text}");
             }
