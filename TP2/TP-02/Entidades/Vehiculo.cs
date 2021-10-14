@@ -26,13 +26,7 @@ namespace Entidades
         /// <summary>
         /// ReadOnly: Retornará el tamaño
         /// </summary>
-        public virtual ETamanio Tamanio
-        {
-            get
-            {
-                return this.Tamanio;
-            }
-        }
+        public abstract ETamanio Tamanio { get; }
 
         public Vehiculo(string chasis, EMarca marca, ConsoleColor color)
         {
@@ -58,6 +52,8 @@ namespace Entidades
             sb.AppendLine("MARCA : "+ p.marca.ToString());
             sb.AppendLine("COLOR : "+ p.color.ToString());
             sb.AppendLine("---------------------");
+            sb.AppendLine("");
+            sb.Append("TAMAÑO : " + p.Tamanio);
             return sb.ToString();
         }
 

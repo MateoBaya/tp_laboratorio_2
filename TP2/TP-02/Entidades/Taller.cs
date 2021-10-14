@@ -60,19 +60,19 @@ namespace Entidades
                 switch (tipo)
                 {
                     case ETipo.Camioneta:
-                        if((short)v.Tamanio==(short)tipo)
+                        if(v.Tamanio.ToString()=="Grande")
                         {
                             sb.AppendLine(v.Mostrar());
                         }
                         break;
                     case ETipo.Moto:
-                        if((short)v.Tamanio==(short)tipo)
+                        if(v.Tamanio.ToString() == "Chico")
                         {
                             sb.AppendLine(v.Mostrar());
                         }
                         break;
                     case ETipo.Automovil:
-                        if((short)v.Tamanio == (short)tipo)
+                        if(v.Tamanio.ToString() == "Mediano")
                         {
                             sb.AppendLine(v.Mostrar());
                         }
@@ -121,7 +121,7 @@ namespace Entidades
             {
                 if (v == vehiculo)
                 {
-                    taller.vehiculos.Remove(vehiculo);
+                    taller.vehiculos.Remove(v);
                     break;
                 }
             }
