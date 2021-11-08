@@ -60,19 +60,19 @@ namespace Entidades
                 switch (tipo)
                 {
                     case ETipo.Camioneta:
-                        if(v.Tamanio.ToString()=="Grande")
+                        if(v is Suv)
                         {
                             sb.AppendLine(v.Mostrar());
                         }
                         break;
                     case ETipo.Moto:
-                        if(v.Tamanio.ToString() == "Chico")
+                        if(v is Ciclomotor)
                         {
                             sb.AppendLine(v.Mostrar());
                         }
                         break;
                     case ETipo.Automovil:
-                        if(v.Tamanio.ToString() == "Mediano")
+                        if(v is Sedan)
                         {
                             sb.AppendLine(v.Mostrar());
                         }
