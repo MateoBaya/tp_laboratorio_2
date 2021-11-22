@@ -1,0 +1,10 @@
+is_global = true
+build_property.TargetFramework = net5.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.PublishSingleFile = 
+build_property.IncludeAllContentForSelfExtract = 
+build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
+build_property.RootNamespace = TestCine
+build_property.ProjectDir = C:\Users\bayam\OneDrive\Escritorio\Programación\Prog y Labo 2\tp_laboratorio_2\TP3\Bayá.Mateo.2C.TPFinal\TestCine\
