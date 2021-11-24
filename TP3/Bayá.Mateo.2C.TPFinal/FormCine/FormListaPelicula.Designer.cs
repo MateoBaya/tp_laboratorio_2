@@ -32,7 +32,6 @@ namespace FormCine
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormListaPelicula));
             this.lstPeliculas = new System.Windows.Forms.ListBox();
-            this.ptbCaratula = new System.Windows.Forms.PictureBox();
             this.txtTitulo = new System.Windows.Forms.TextBox();
             this.txtDuracion = new System.Windows.Forms.TextBox();
             this.lblTitulo = new System.Windows.Forms.Label();
@@ -46,13 +45,13 @@ namespace FormCine
             this.txtRanking = new System.Windows.Forms.TextBox();
             this.msControles = new System.Windows.Forms.MenuStrip();
             this.abrirTicketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.modificarBaseDeDatosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.descargarTicketsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.analisisDeBaseDeDatosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cerrarSesionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblRanking5 = new System.Windows.Forms.Label();
             this.lblEstrellas = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.ttHelp = new System.Windows.Forms.ToolTip(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.ptbCaratula)).BeginInit();
             this.msControles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -67,16 +66,6 @@ namespace FormCine
             this.lstPeliculas.Size = new System.Drawing.Size(146, 424);
             this.lstPeliculas.TabIndex = 0;
             this.lstPeliculas.SelectedIndexChanged += new System.EventHandler(this.lstPeliculas_SelectedIndexChanged);
-            // 
-            // ptbCaratula
-            // 
-            this.ptbCaratula.Location = new System.Drawing.Point(237, 31);
-            this.ptbCaratula.MaximumSize = new System.Drawing.Size(300, 190);
-            this.ptbCaratula.Name = "ptbCaratula";
-            this.ptbCaratula.Size = new System.Drawing.Size(210, 190);
-            this.ptbCaratula.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.ptbCaratula.TabIndex = 1;
-            this.ptbCaratula.TabStop = false;
             // 
             // txtTitulo
             // 
@@ -179,8 +168,9 @@ namespace FormCine
             // 
             this.msControles.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.abrirTicketToolStripMenuItem,
-            this.modificarBaseDeDatosToolStripMenuItem,
-            this.analisisDeBaseDeDatosToolStripMenuItem});
+            this.descargarTicketsToolStripMenuItem,
+            this.analisisDeBaseDeDatosToolStripMenuItem,
+            this.cerrarSesionToolStripMenuItem});
             this.msControles.Location = new System.Drawing.Point(0, 0);
             this.msControles.Name = "msControles";
             this.msControles.Size = new System.Drawing.Size(455, 24);
@@ -194,20 +184,32 @@ namespace FormCine
             this.abrirTicketToolStripMenuItem.Text = "Abrir Ticket";
             this.abrirTicketToolStripMenuItem.Click += new System.EventHandler(this.abrirTicketToolStripMenuItem_Click);
             // 
-            // modificarBaseDeDatosToolStripMenuItem
+            // descargarTicketsToolStripMenuItem
             // 
-            this.modificarBaseDeDatosToolStripMenuItem.Enabled = false;
-            this.modificarBaseDeDatosToolStripMenuItem.Name = "modificarBaseDeDatosToolStripMenuItem";
-            this.modificarBaseDeDatosToolStripMenuItem.Size = new System.Drawing.Size(146, 20);
-            this.modificarBaseDeDatosToolStripMenuItem.Text = "Modificar Base de Datos";
-            this.modificarBaseDeDatosToolStripMenuItem.Visible = false;
+            this.descargarTicketsToolStripMenuItem.Enabled = false;
+            this.descargarTicketsToolStripMenuItem.Name = "descargarTicketsToolStripMenuItem";
+            this.descargarTicketsToolStripMenuItem.Size = new System.Drawing.Size(110, 20);
+            this.descargarTicketsToolStripMenuItem.Text = "Descargar Tickets";
+            this.descargarTicketsToolStripMenuItem.Visible = false;
+            this.descargarTicketsToolStripMenuItem.Click += new System.EventHandler(this.descargarTicketsToolStripMenuItem_Click);
             // 
             // analisisDeBaseDeDatosToolStripMenuItem
             // 
+            this.analisisDeBaseDeDatosToolStripMenuItem.Enabled = false;
             this.analisisDeBaseDeDatosToolStripMenuItem.Name = "analisisDeBaseDeDatosToolStripMenuItem";
-            this.analisisDeBaseDeDatosToolStripMenuItem.Size = new System.Drawing.Size(150, 20);
-            this.analisisDeBaseDeDatosToolStripMenuItem.Text = "Analisis de base de datos";
+            this.analisisDeBaseDeDatosToolStripMenuItem.Size = new System.Drawing.Size(122, 20);
+            this.analisisDeBaseDeDatosToolStripMenuItem.Text = "Analisis de usuarios";
             this.analisisDeBaseDeDatosToolStripMenuItem.Visible = false;
+            this.analisisDeBaseDeDatosToolStripMenuItem.Click += new System.EventHandler(this.analisisDeBaseDeDatosToolStripMenuItem_Click);
+            // 
+            // cerrarSesionToolStripMenuItem
+            // 
+            this.cerrarSesionToolStripMenuItem.Enabled = false;
+            this.cerrarSesionToolStripMenuItem.Name = "cerrarSesionToolStripMenuItem";
+            this.cerrarSesionToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
+            this.cerrarSesionToolStripMenuItem.Text = "Cerrar sesion";
+            this.cerrarSesionToolStripMenuItem.Visible = false;
+            this.cerrarSesionToolStripMenuItem.Click += new System.EventHandler(this.cerrarSesionToolStripMenuItem_Click);
             // 
             // lblRanking5
             // 
@@ -232,9 +234,9 @@ namespace FormCine
             // pictureBox1
             // 
             this.pictureBox1.Image = global::FormCine.Properties.Resources.help;
-            this.pictureBox1.Location = new System.Drawing.Point(424, 1);
+            this.pictureBox1.Location = new System.Drawing.Point(428, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(25, 25);
+            this.pictureBox1.Size = new System.Drawing.Size(24, 24);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 20;
             this.pictureBox1.TabStop = false;
@@ -260,7 +262,6 @@ namespace FormCine
             this.Controls.Add(this.lblTitulo);
             this.Controls.Add(this.txtDuracion);
             this.Controls.Add(this.txtTitulo);
-            this.Controls.Add(this.ptbCaratula);
             this.Controls.Add(this.lstPeliculas);
             this.Controls.Add(this.msControles);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -270,10 +271,9 @@ namespace FormCine
             this.MinimizeBox = false;
             this.Name = "FormListaPelicula";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FormEntradas";
+            this.Text = "Peliculas";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormListaPelicula_FormClosing);
             this.Load += new System.EventHandler(this.FormEntradas_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.ptbCaratula)).EndInit();
             this.msControles.ResumeLayout(false);
             this.msControles.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -285,7 +285,6 @@ namespace FormCine
         #endregion
 
         private System.Windows.Forms.ListBox lstPeliculas;
-        private System.Windows.Forms.PictureBox ptbCaratula;
         private System.Windows.Forms.TextBox txtTitulo;
         private System.Windows.Forms.TextBox txtDuracion;
         private System.Windows.Forms.Label lblTitulo;
@@ -299,11 +298,12 @@ namespace FormCine
         private System.Windows.Forms.TextBox txtRanking;
         private System.Windows.Forms.MenuStrip msControles;
         private System.Windows.Forms.ToolStripMenuItem abrirTicketToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem modificarBaseDeDatosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem descargarTicketsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem analisisDeBaseDeDatosToolStripMenuItem;
         private System.Windows.Forms.Label lblRanking5;
         private System.Windows.Forms.Label lblEstrellas;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolTip ttHelp;
+        private System.Windows.Forms.ToolStripMenuItem cerrarSesionToolStripMenuItem;
     }
 }

@@ -41,10 +41,6 @@ namespace FormCine
             this.txtCantidadEntradas = new System.Windows.Forms.TextBox();
             this.txtDimensiones = new System.Windows.Forms.TextBox();
             this.txtHorario = new System.Windows.Forms.TextBox();
-            this.pnlInvis1 = new System.Windows.Forms.Panel();
-            this.pnlInvis3 = new System.Windows.Forms.Panel();
-            this.pnlInvis2 = new System.Windows.Forms.Panel();
-            this.pnlInvis4 = new System.Windows.Forms.Panel();
             this.txtPrecio = new System.Windows.Forms.TextBox();
             this.lblPrecio = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -165,38 +161,6 @@ namespace FormCine
             this.txtHorario.TabIndex = 10;
             this.txtHorario.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // pnlInvis1
-            // 
-            this.pnlInvis1.BackColor = System.Drawing.Color.LightPink;
-            this.pnlInvis1.Location = new System.Drawing.Point(1, 0);
-            this.pnlInvis1.Name = "pnlInvis1";
-            this.pnlInvis1.Size = new System.Drawing.Size(12, 216);
-            this.pnlInvis1.TabIndex = 11;
-            // 
-            // pnlInvis3
-            // 
-            this.pnlInvis3.BackColor = System.Drawing.Color.LightPink;
-            this.pnlInvis3.Location = new System.Drawing.Point(607, 0);
-            this.pnlInvis3.Name = "pnlInvis3";
-            this.pnlInvis3.Size = new System.Drawing.Size(10, 213);
-            this.pnlInvis3.TabIndex = 12;
-            // 
-            // pnlInvis2
-            // 
-            this.pnlInvis2.BackColor = System.Drawing.Color.LightPink;
-            this.pnlInvis2.Location = new System.Drawing.Point(2, 0);
-            this.pnlInvis2.Name = "pnlInvis2";
-            this.pnlInvis2.Size = new System.Drawing.Size(611, 10);
-            this.pnlInvis2.TabIndex = 12;
-            // 
-            // pnlInvis4
-            // 
-            this.pnlInvis4.BackColor = System.Drawing.Color.LightPink;
-            this.pnlInvis4.Location = new System.Drawing.Point(1, 209);
-            this.pnlInvis4.Name = "pnlInvis4";
-            this.pnlInvis4.Size = new System.Drawing.Size(616, 10);
-            this.pnlInvis4.TabIndex = 13;
-            // 
             // txtPrecio
             // 
             this.txtPrecio.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
@@ -226,10 +190,6 @@ namespace FormCine
             this.ClientSize = new System.Drawing.Size(613, 218);
             this.Controls.Add(this.lblPrecio);
             this.Controls.Add(this.txtPrecio);
-            this.Controls.Add(this.pnlInvis4);
-            this.Controls.Add(this.pnlInvis2);
-            this.Controls.Add(this.pnlInvis3);
-            this.Controls.Add(this.pnlInvis1);
             this.Controls.Add(this.txtHorario);
             this.Controls.Add(this.txtDimensiones);
             this.Controls.Add(this.txtCantidadEntradas);
@@ -247,7 +207,7 @@ namespace FormCine
             this.MinimizeBox = false;
             this.Name = "FormTicket";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FormTicket";
+            this.Text = "Disfrute su pelicula!";
             this.TransparencyKey = System.Drawing.Color.LightPink;
             this.Load += new System.EventHandler(this.FormTicket_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -269,10 +229,6 @@ namespace FormCine
         private System.Windows.Forms.TextBox txtCantidadEntradas;
         private System.Windows.Forms.TextBox txtDimensiones;
         private System.Windows.Forms.TextBox txtHorario;
-        private System.Windows.Forms.Panel pnlInvis1;
-        private System.Windows.Forms.Panel pnlInvis3;
-        private System.Windows.Forms.Panel pnlInvis4;
-        private System.Windows.Forms.Panel pnlInvis2;
         private System.Windows.Forms.TextBox txtPrecio;
         private System.Windows.Forms.Label lblPrecio;
     }

@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
@@ -17,45 +18,59 @@ namespace FormCine
         List<Pelicula> peliculas = new List<Pelicula>();
         FormIngreso formIngresoPadre;
         FormCompraEntradas formCompraEntradas;
+        FormAnalisisBaseDeDatos formAnalisisBaseDeDatos;
         Pelicula peliculaElegida;
         FormTicket formTicket;
-
+        string connectionString = "Server=.;Database=Pelis;Trusted_Connection=True;";
+        CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+        bool isLogOut= false;
 
         public FormListaPelicula(FormIngreso formIngreso):this(false,formIngreso)
         { }
-        public FormListaPelicula(bool iniciadoSesion,FormIngreso formIngreso)
+        public FormListaPelicula(bool adminIniciado,FormIngreso formIngreso)
         {
             InitializeComponent();
             this.formIngresoPadre = formIngreso;
-            if(iniciadoSesion==true)
+            if(adminIniciado)
             {
-                modificarBaseDeDatosToolStripMenuItem.Visible = true;
                 analisisDeBaseDeDatosToolStripMenuItem.Visible = true;
+                analisisDeBaseDeDatosToolStripMenuItem.Enabled = true;
+                btnComprar.Visible = false;
+                btnComprar.Enabled = false;
+            }
+            if(!adminIniciado)
+            {
+                analisisDeBaseDeDatosToolStripMenuItem.Visible = false;
+                analisisDeBaseDeDatosToolStripMenuItem.Enabled = false;
+                btnComprar.Visible = true;
+                btnComprar.Enabled = true;
             }
         }
 
         private void FormEntradas_Load(object sender, EventArgs e)
         {
-            Pelicula pelicula = new Pelicula(1,"Batman",120,480,4,"Gran pelicula por un gran director");
-            Pelicula pelicula2 = new Pelicula(2, "Json vs Xml", 200, 4, 2, "Malisima");
-            Pelicula pelicula3 = new Pelicula(3, "Json vs Xml 2",180,50,3,"Como siguen haciendo esta pelicula");
-            Pelicula pelicula4 = new Pelicula(4,"Json vs Xml 3",80,354,((float)4.6),"Al menos tiene una duracion normal esta vez");
-            Pelicula pelicula5 = new Pelicula(5,"Spiderman",100,10000,5,"Gran pelicula, un clasico del cine de superheroes");
-            Pelicula pelicula6 = new Pelicula(6,"Alien",90,4800,5,"Un clasico del terror");
-            Pelicula pelicula7 = new Pelicula(7,"The Room",80,59,1,"Nadie sabe por que esta pelicula se hizo, pero salio");
-            Pelicula pelicula8 = new Pelicula(8,"X-men",90,1500,3,"Buena pelicula, envejecio algo mal");
-
-
-            peliculas.Agregar(pelicula);
-            peliculas.Agregar(pelicula2);
-            peliculas.Agregar(pelicula3);
-            peliculas.Agregar(pelicula4);
-            peliculas.Agregar(pelicula5);
-            peliculas.Agregar(pelicula6);
-            peliculas.Agregar(pelicula7);
-            peliculas.Agregar(pelicula8);
-
-
+            try
+            {
+                peliculas = SqlHandler.LeerPeliculas(connectionString);
+                if(!(FormIngreso.UsuarioLogeado is null))
+                {
+                    descargarTicketsToolStripMenuItem.Visible = true;
+                    descargarTicketsToolStripMenuItem.Enabled = true;
+                    cerrarSesionToolStripMenuItem.Visible = true;
+                    cerrarSesionToolStripMenuItem.Enabled = true;
+                }
+                else
+                {
+                    descargarTicketsToolStripMenuItem.Visible = false;
+                    descargarTicketsToolStripMenuItem.Enabled = false;
+                    cerrarSesionToolStripMenuItem.Visible = false;
+                    cerrarSesionToolStripMenuItem.Enabled = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,"ERROR",MessageBoxButtons.OK,MessageBoxIcon.Error);
+            }
             CargarListaAListBox();
         }
         /// <summary>
@@ -87,6 +102,7 @@ namespace FormCine
                     if (String.Compare(pelicula.Nombre,lstPeliculas.SelectedItem.ToString())==0)
                     {
                         peliculaElegida = pelicula;
+                        peliculaElegida.VisitasCambiada += SumarVisitasSQL;
                         txtTitulo.Text = peliculaElegida.Nombre;
                         txtDuracion.Text = peliculaElegida.Duracion.ToString();
                         txtRanking.Text = peliculaElegida.Ranking.ToString();
@@ -96,6 +112,18 @@ namespace FormCine
                         break;
                     }
                 }
+            }
+        }
+
+        private void SumarVisitasSQL(Pelicula pelicula)
+        {
+            try
+            {
+                SqlHandler.ModificarPeliculaVisitas(connectionString,pelicula.Id,pelicula.Visitas);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -109,21 +137,6 @@ namespace FormCine
             {
                 formCompraEntradas = FormGenerico<FormCompraEntradas>.IsActivatedSignleton<Pelicula>(formCompraEntradas,peliculaElegida);
                 formCompraEntradas.Show();
-            }
-        }
-
-        private void FormListaPelicula_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if(MessageBox.Show("¿Seguro que quiere salir?","Salir",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.No)
-            {
-                e.Cancel = true;
-            }
-            else
-            {
-                if (!(formIngresoPadre is null))
-                {
-                    formIngresoPadre.Close();
-                }
             }
         }
 
@@ -151,6 +164,71 @@ namespace FormCine
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message,"ERROR",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void descargarTicketsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CancellationToken cancellation = cancellationTokenSource.Token;
+            Task task = Task.Run(() => ObtenerTicketsEnParalelo(cancellation));
+        }
+
+        private void ObtenerTicketsEnParalelo(CancellationToken cancellationToken)
+        {
+            try
+            {
+                List<Comprador> tickets = SqlHandler.ObtenerCompradorDeBaseDeDatos(connectionString, FormIngreso.UsuarioLogeado.Id);
+                foreach (Comprador item in tickets)
+                {
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        break;
+                    }
+                    Ticket.ArmarTicket(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,"ERROR",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                return;
+            }
+            MessageBox.Show("Su descarga finalizó correctamente", "Felicitaciones", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void cerrarSesionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.isLogOut = true;
+            this.Close();
+        }
+
+        private void analisisDeBaseDeDatosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            formAnalisisBaseDeDatos = FormGenerico<FormAnalisisBaseDeDatos>.IsActivatedSingleton(formAnalisisBaseDeDatos);
+            formAnalisisBaseDeDatos.Show();
+        }
+
+        private void FormListaPelicula_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (this.isLogOut)
+            {
+                cancellationTokenSource.Cancel();
+                this.formIngresoPadre.ObtenerError.Clear();
+                this.formIngresoPadre.Show();
+            }
+            else
+            {
+                if (MessageBox.Show("¿Seguro que quiere salir?", "Salir", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                {
+                    e.Cancel = true;
+                }
+                else
+                {
+                    if(!(formIngresoPadre is null))
+                    {
+                        cancellationTokenSource.Cancel();
+                        formIngresoPadre.Close();
+                    }
                 }
             }
         }

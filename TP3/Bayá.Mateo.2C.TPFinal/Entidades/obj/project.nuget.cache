@@ -1,8 +1,18 @@
 {
   "version": 2,
-  "dgSpecHash": "wC+av9KxV1dyaO0hePPuSCWOIcHMeFMNpt5ZSActd2NaMOo1DFXdrhcGpfijmXmaDpOJcqME3Rkuq+Mz3NxUBQ==",
+  "dgSpecHash": "pHrGEfAJScmbQjq8PIh/G6Zcuz8Q+EXPRkVi5My713OQZwQ4JmiPrTpEHd38PAgAHGMMPnJJ3OW3WD/rIt2Kkg==",
   "success": true,
   "projectFilePath": "C:\\Users\\bayam\\OneDrive\\Escritorio\\Programación\\Prog y Labo 2\\tp_laboratorio_2\\TP3\\Bayá.Mateo.2C.TPFinal\\Entidades\\Entidades.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\bayam\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
+    "C:\\Users\\bayam\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
+    "C:\\Users\\bayam\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.7.0\\runtime.native.system.data.sqlclient.sni.4.7.0.nupkg.sha512",
+    "C:\\Users\\bayam\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\bayam\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\bayam\\.nuget\\packages\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\bayam\\.nuget\\packages\\system.data.sqlclient\\4.8.3\\system.data.sqlclient.4.8.3.nupkg.sha512",
+    "C:\\Users\\bayam\\.nuget\\packages\\system.security.accesscontrol\\4.7.0\\system.security.accesscontrol.4.7.0.nupkg.sha512",
+    "C:\\Users\\bayam\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512"
+  ],
   "logs": []
 }

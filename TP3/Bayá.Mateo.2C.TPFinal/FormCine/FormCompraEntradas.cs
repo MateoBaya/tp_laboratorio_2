@@ -15,6 +15,7 @@ namespace FormCine
     {
         Pelicula peliculaElegida;
         FormExito formExito;
+        string connectionString = "Server=.;Database=Pelis;Trusted_Connection=True;";
 
         public FormCompraEntradas()
         {
@@ -64,8 +65,11 @@ namespace FormCine
             {
                 txtTitulo.Text = peliculaElegida.Nombre;
                 txtDuracion.Text = peliculaElegida.Duracion.ToString();
+                if (!(FormIngreso.UsuarioLogeado is null))
+                {
+                    txtNombreCompleto.Text = FormIngreso.UsuarioLogeado.NombreCompleto;
+                }
                 txtDescripcion.Text = peliculaElegida.Descripcion;
-
 
                 List<string> listaDeHorarios = new StringBuilder(Pelicula.ElegirHorarioDisponible()).StringBuilderToList();
                 foreach(string linea in listaDeHorarios)
@@ -89,8 +93,25 @@ namespace FormCine
             {
                 int.TryParse(txtCantidad.Text, out int cantidadEntradas);
                 Entrada entrada = new Entrada(0,peliculaElegida,cmbTipoDePelicula.Text,cantidadEntradas);
-                Comprador comprador = new Comprador(0,entrada,txtNombreCompleto.Text,cmbHorarios.Text);
+
+                Comprador comprador = null;
+
+                if (!(FormIngreso.UsuarioLogeado is null))
+                {
+                    comprador = new Comprador(FormIngreso.UsuarioLogeado.Id,entrada,txtNombreCompleto.Text,cmbHorarios.Text);
+                }
+                else
+                {
+                    comprador = new Comprador(0, entrada, txtNombreCompleto.Text, cmbHorarios.Text);
+                }
+
                 formExito = FormGenerico<FormExito>.IsActivatedSignleton<string>(formExito, Ticket.ArmarTicket(comprador));
+
+                if(!(FormIngreso.UsuarioLogeado is null))
+                {
+                    SqlHandler.AlmacenarTicketEnBaseDeDatos(connectionString, comprador, FormIngreso.UsuarioLogeado.Id);
+                }
+
                 if(!(formExito is null))
                 {
                     formExito.Show();

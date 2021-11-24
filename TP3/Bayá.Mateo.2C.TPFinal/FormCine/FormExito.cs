@@ -48,10 +48,16 @@ namespace FormCine
 
         private void btnVerTicket_Click(object sender, EventArgs e)
         {
-            
-            Comprador comprador = Ticket.LeerTicket(path);
-            formTicket = FormGenerico<FormTicket>.IsActivatedSignleton<Comprador>(formTicket,comprador);
-            formTicket.Show();
+            try
+            {
+                    Comprador comprador = Ticket.LeerTicket(path);
+                    formTicket = FormGenerico<FormTicket>.IsActivatedSignleton<Comprador>(formTicket,comprador);
+                    formTicket.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,"ERROR",MessageBoxButtons.OK,MessageBoxIcon.Error);
+            }
             this.Close();
         }
 

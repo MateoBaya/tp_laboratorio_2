@@ -129,6 +129,7 @@ namespace FormCine
             this.btnRegistrarse.TabIndex = 9;
             this.btnRegistrarse.Text = "Registrarse";
             this.btnRegistrarse.UseVisualStyleBackColor = false;
+            this.btnRegistrarse.Click += new System.EventHandler(this.btnRegistrarse_Click);
             // 
             // btnNoSesion
             // 

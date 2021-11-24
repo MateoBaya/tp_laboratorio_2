@@ -61,12 +61,37 @@ namespace Entidades
 
             try
             {
+                int contador = 0;
+                while(File.Exists(path))
+                {
+                    contador++;
+                    int i = path.IndexOf(".xml");
+                    if (i >= 0)
+                    {
+                        if(path[i-1]==')')
+                        {
+                            int j = i-1;
+                            while (path[j]!='(')
+                            {
+                                j--;
+                            }
+                            path = path.Remove(j,3);
+                            path = path.Insert(j, $"({contador})");
+
+                        }
+                        else
+                        {
+                            path = path.Insert(i, $"({contador})");
+                        }
+                    }
+                }
                 StreamWriter sw = new StreamWriter(path);
                 XmlTextWriter writer = new XmlTextWriter(sw);
                 XmlSerializer serializer = new XmlSerializer(typeof(Comprador));
                 serializer.Serialize(writer, comprador);
                 writer.Close();
                 sw.Close();
+
             }
             catch (PathTooLongException)
             {
